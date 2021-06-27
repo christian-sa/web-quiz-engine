@@ -27,7 +27,6 @@ This project is a Web Quiz API built with Spring Boot. I developed it for the Je
   > JSON Body with valid Quiz
 - Solve Quiz
   > POST: localhost:8080/api/quizzes/{id}/solve \
-  > JSON Body with valid Quiz
 - Get Quiz by ID
   > GET: localhost:8080/api/quizzes/{id} 
 - Get all Quizzes
