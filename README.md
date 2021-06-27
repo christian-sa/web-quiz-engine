@@ -1,10 +1,6 @@
 # Web Quiz Engine
 This project is a Web Quiz API built with Spring Boot. I developed it for the JetBrains Academy
-[HyperSkill](https://hyperskill.org/) and plan to expand it in the future.  
-Currently, the API is very bare-bones without any Frontend Implementation. All operations, except registering a user,
-are protected by basic authentication. Admin account to access all features: email = "superuser@mail.com", password = "admin".
-You can use [Reqbin](https://reqbin.com/) to test out the API. You always need to include Basic Auth in your Request with the provided
-admin account, or your custom user account.
+[HyperSkill](https://hyperskill.org/) and plan to expand it in the future. Currently, the API is very bare-bones without any Frontend Implementation. All operations, except registering a user, are protected by basic authentication. You can use [Reqbin](https://reqbin.com/) to test out the API. You always need to include Basic Auth in your Request with the provided admin account, or your custom user account. Admin account to access all features: email = "superuser@mail.com", password = "admin".
 #### Requirements for submitting a valid Quiz
 - JSON Body:
   >{ \
