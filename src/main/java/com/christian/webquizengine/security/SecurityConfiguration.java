@@ -1,6 +1,5 @@
 package com.christian.webquizengine.security;
 
-import com.christian.webquizengine.model.user.MyUserDetails;
 import com.christian.webquizengine.service.user.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.security.SecureRandom;
 
-/**
- * Configuration of Spring Security.
- */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -49,19 +45,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers(HttpMethod.POST, "/api/register");
     }
-
-    //    /**
-//     * DaoAuthenticationProvider performs the authentication logic.
-//     * @return DaoAuthenticationProvider.
-//     */
-//    @Bean
-//    public AuthenticationProvider daoAuthenticationProvider() {
-//        DaoAuthenticationProvider provider =
-//                new DaoAuthenticationProvider();
-//        provider.setPasswordEncoder(getPasswordEncoder());
-//        provider.setUserDetailsService(this.userDetailsServiceImp);
-//        return provider;
-//    }
 
     /**
      * Set Password Encryption to BCryptPasswordEncoder.

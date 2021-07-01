@@ -1,62 +1,66 @@
 package com.christian.webquizengine.api;
 
-import com.christian.webquizengine.model.exception.PermissionDeniedException;
-import com.christian.webquizengine.model.quiz.Answer;
-import com.christian.webquizengine.model.quiz.Quiz;
-import com.christian.webquizengine.model.quiz.QuizCompletion;
+import com.christian.webquizengine.exception.PermissionDeniedException;
+import com.christian.webquizengine.exception.QuizNotFoundException;
+import com.christian.webquizengine.model.quiz.MyQuiz;
+import com.christian.webquizengine.model.quiz.MyQuizCompletion;
+import com.christian.webquizengine.model.quiz.QuizData;
 import com.christian.webquizengine.model.quiz.QuizResult;
-import com.christian.webquizengine.service.completion.QuizCompletionService;
-import com.christian.webquizengine.service.quiz.QuizService;
+import com.christian.webquizengine.service.quiz.MyQuizCompletionService;
+import com.christian.webquizengine.service.quiz.MyQuizService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
 @Validated
 public class QuizController {
 
-    private QuizService quizService;
-    private QuizCompletionService quizCompletionService;
+    private final MyQuizService myQuizService;
+    private final MyQuizCompletionService myQuizCompletionService;
 
     @Autowired
-    public QuizController(QuizService quizService, QuizCompletionService quizCompletionService) {
-        this.quizService = quizService;
-        this.quizCompletionService = quizCompletionService;
+    public QuizController(MyQuizService myQuizService, MyQuizCompletionService myQuizCompletionService) {
+        this.myQuizService= myQuizService;
+        this.myQuizCompletionService = myQuizCompletionService;
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PostMapping("/api/quizzes")
-    public Quiz postQuiz(@Valid @RequestBody Quiz quiz, @AuthenticationPrincipal UserDetails userDetails) {
-        quiz.setAuthentication(userDetails.getUsername());
-        return quizService.saveQuiz(quiz);
+    public MyQuiz postQuiz(@Valid @RequestBody QuizData quizData, @AuthenticationPrincipal UserDetails userDetails) {
+        return myQuizService.save(
+                new MyQuiz(quizData.getTitle(), quizData.getText(), quizData.getOptions(),
+                        quizData.getAnswer(), userDetails.getUsername()));
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    @PostMapping("/api/quizzes/{id}/solve")
-    public QuizResult solveQuiz(@PathVariable long id, @RequestBody Answer answer, @AuthenticationPrincipal UserDetails userDetails) {
-        // debugging
-//        System.out.println(id);
-//        System.out.println(getQuizByID(id).getAnswer().toString());
-//        System.out.println(answer.getAnswer().toString());
-//        System.out.println(getQuizByID(id).getAnswer().toString().equals(answer.getAnswer().toString()));
-        String correctAnswer = getQuizByID(id).getAnswer().toString();
-        String submittedAnswer = answer.getAnswer().toString();
+    @PostMapping(value = "/api/quizzes/{id}/solve")
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+    public QuizResult solveQuiz(@PathVariable long id, @RequestBody List<Integer> answer, @AuthenticationPrincipal UserDetails userDetails) {
+        // Set a baseline for the correct answer, since it can be null. In that case, string remains empty.
+        String correctAnswer = "";
+        // Catch NPE and ignore it, since we already established a baseline for the correct answer.
+        try {
+            correctAnswer = myQuizService.findById(id).orElseThrow(() -> new QuizNotFoundException(id)).getAnswer().toString();
+        } catch (Exception ignore) { }
+        // If submitted List in RequestBody is empty, treat it as empty string.
+        String submittedAnswer = answer.isEmpty() ? "" : answer.toString();
+        // Because of the precautions we took, this should work correctly now.
         boolean success = Objects.equals(correctAnswer, submittedAnswer);
         String submittedBy = userDetails.getUsername();
-        String currentDate = LocalDateTime.now().toString();
         if (success) {
-            quizCompletionService.saveQuizCompletion(
-                    new QuizCompletion(id,currentDate, submittedBy)
+            myQuizCompletionService.save(
+                    new MyQuizCompletion(submittedBy, id)
             );
         }
         return new QuizResult(success);
@@ -64,60 +68,68 @@ public class QuizController {
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/api/quizzes")
-    public Page<Quiz> getAllQuizzes(
+    public Page<MyQuiz> getAllQuizzes(
             @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer pagesize) {
-        return quizService.getAllQuizzes(page, pagesize);
+        return myQuizService.findAll(page, pagesize);
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/api/quizzes/{id}")
-    public Quiz getQuizByID(@PathVariable long id) {
-        return quizService.getQuizByID(id);
+    public MyQuiz getQuizByID(@PathVariable long id) {
+    return myQuizService.findById(id).orElseThrow(() -> new QuizNotFoundException(id));
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @DeleteMapping("/api/quizzes/{id}")
     public ResponseEntity<HttpStatus> deleteQuizByID(@PathVariable long id, @AuthenticationPrincipal UserDetails userDetails) {
-        Quiz quiz = quizService.getQuizByID(id);
-        if (hasPermission(quiz.getAuthentication(), userDetails.getUsername())) {
-            quizService.deleteQuizByID(id);
+        if (hasPermission(getQuizByID(id).getAuthentication(), userDetails.getUsername()) ||
+                userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            myQuizService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            throw new PermissionDeniedException(quiz);
+            throw new PermissionDeniedException(id);
         }
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PutMapping("/api/quizzes/{id}")
-    public Quiz updateQuizID(@PathVariable long id, @Valid @RequestBody Quiz quiz, @AuthenticationPrincipal UserDetails userDetails) {
-        // Make a delete request. If Error occurs (e.g., 403 Forbidden) method won't be executed
-        // further anyway so no need to do any error handling here. Already managed my @DeleteMapping.
-        deleteQuizByID(id, userDetails);
-        quiz.setAuthentication(userDetails.getUsername());
-        // Attempt to save quiz to database.
-        return quizService.saveQuiz(quiz);
+    public void updateQuizID(@PathVariable long id, @Valid @RequestBody QuizData quizData, @AuthenticationPrincipal UserDetails userDetails) {
+        if (hasPermission(getQuizByID(id).getAuthentication(), userDetails.getUsername()) ||
+                userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            myQuizService.updateById(id, new MyQuiz(quizData, userDetails.getUsername()));
+        } else {
+            throw new PermissionDeniedException(id);
+        }
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/api/quizzes/completed")
-    public Page<QuizCompletion> getAllQuizCompletionsByUser(
+    public Page<MyQuizCompletion> getAllQuizCompletionsByUser(
             @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer pagesize,
             @AuthenticationPrincipal UserDetails userDetails) {
-        return quizCompletionService.getAllQuizCompletionsByUser(page, pagesize, userDetails.getUsername());
-    }
-
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @GetMapping("/api/admin/{user}/completed")
-    public Page<QuizCompletion> getAllQuizCompletionsByUserAdmin(
-            @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer pagesize,
-            @PathVariable String user) {
-        return quizCompletionService.getAllQuizCompletionsByUser(page, pagesize, user);
+        return myQuizCompletionService.findAllByAuthentication(page, pagesize, userDetails.getUsername());
     }
 
     public boolean hasPermission(String quizCreator, String currentUser) {
-        // For debugging.
-//        System.out.println("quizCreator: " + quizCreator + ", " + "currentUser: " + currentUser);
         return Objects.equals(quizCreator, currentUser);
     }
 
+
+    /*
+     * ADMIN MAPPING
+     */
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/api/admin/{user}/completed")
+    public Page<MyQuizCompletion> getAllQuizCompletionsByUserAdmin(
+            @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer pagesize,
+            @PathVariable String user) {
+        return myQuizCompletionService.findAllByAuthentication(page, pagesize, user);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @DeleteMapping("/api/admin/quizzes")
+    public void deleteAllQuizzes() {
+        myQuizService.deleteAll();
+    }
 }

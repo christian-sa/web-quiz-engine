@@ -1,4 +1,4 @@
-package com.christian.webquizengine.model.exception;
+package com.christian.webquizengine.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
