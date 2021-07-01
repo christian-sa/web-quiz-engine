@@ -23,7 +23,8 @@ Because most of the application is secured with HTTP Basic Auth, you have to aut
 You can either use the provided admin account for that to access all the functionality, or register yourself as a new user.
 ##### Admin account
 Email: `superuser@mail.com` \
-Password: `admin`
+Password: `admin` 
+
 ---
 ### Unauthorized
 #### Registering as a new user
