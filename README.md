@@ -13,7 +13,8 @@ also use a Unix Shell (i.e., Bash) on your computer and utilize `curl`. However,
 ```
 gradlew bootRun
 ```
-*Note: You have to navigate the shell to the projects directory.
+*Note: You have to navigate the shell to the projects directory.* 
+
 It will run on port `8080` by default. Currently, the application will create a fresh database
 on every startup and wipe the existing one if necessary. If you would like to change these behaviours, you have to configure
 `server.port=8080` and `spring.jpa.hibernate.ddl-auto=create` in the `application.properties` file.
