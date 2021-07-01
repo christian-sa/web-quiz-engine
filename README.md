@@ -17,7 +17,7 @@ It will run on port `8080` by default. Please also note that currently, the appl
 on every startup and wipe the existing one if necessary. If you would like to change these behaviours, you have to configure
 `server.port=8080` and `spring.jpa.hibernate.ddl-auto=create` in the `application.properties` file.
 
-## Features
+# Features
 ### Security
 Because most of the application is secured with HTTP Basic Auth, you have to authorize your requests with valid credentials.
 You can either use the provided admin account for that to access all the functionality, or register yourself as a new user.
