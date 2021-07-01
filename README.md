@@ -23,7 +23,7 @@ You can either use the provided admin account for that to access all the functio
 ##### Admin account
 Email: `superuser@mail.com` \
 Password: `admin` 
-# API documentation
+# API Documentation
 ## Unauthorized
 ### Registering as a new user
 ```
