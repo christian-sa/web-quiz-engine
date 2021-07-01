@@ -26,7 +26,7 @@ Email: `superuser@mail.com` \
 Password: `admin` 
 
 ---
-### Unauthorized
+## Unauthorized
 #### Registering as a new user
 ```
 POST http://localhost:8080/api/register
@@ -48,7 +48,7 @@ POST http://localhost:8080/api/register
 - `HTTP 400` email is already taken by another user.
 - `HTTP 400` either email or password are invalid.
 ---
-### User
+## User
 #### Creating a new quiz
 ```
 POST http://localhost:8080/api/quizzes
@@ -336,7 +336,7 @@ http://localhost:8080/api/quizzes/completed?page=0&pagesize=5
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
 ---
-### Admin
+## Admin
 #### Getting all registered users (with paging)
 ```
 GET http://localhost:8080/api/admin/users
