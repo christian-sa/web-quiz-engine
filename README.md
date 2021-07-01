@@ -17,19 +17,17 @@ It will run on port `8080` by default. Please also note that currently, the appl
 on every startup and wipe the existing one if necessary. If you would like to change these behaviours, you have to configure
 `server.port=8080` and `spring.jpa.hibernate.ddl-auto=create` in the `application.properties` file.
 
-# Features
 ### Security
 Because most of the application is secured with HTTP Basic Auth, you have to authorize your requests with valid credentials.
 You can either use the provided admin account for that to access all the functionality, or register yourself as a new user.
 ##### Admin account
 Email: `superuser@mail.com` \
 Password: `admin` 
-
----
+# API documentation
 ## Unauthorized
-#### Registering as a new user
+### Registering as a new user
 ```
-POST http://localhost:8080/api/register
+POST /api/register
 ```
 
 **Request JSON:**
@@ -38,20 +36,22 @@ POST http://localhost:8080/api/register
 
 **Example request:**
 ```
+POST /lohalhost:8080/api/register
+
 {
   "email": "testing@mail.com",
   "password": "secret"
 }
 ```
-##### Possible HTTP Status Codes
+#### Possible HTTP Status Codes
 - `HTTP 200` user was registered successfully.
 - `HTTP 400` email is already taken by another user.
 - `HTTP 400` either email or password are invalid.
 ---
 ## User
-#### Creating a new quiz
+### Creating a new quiz
 ```
-POST http://localhost:8080/api/quizzes
+POST /api/quizzes
 ```
 
 **Request JSON:**
@@ -62,6 +62,8 @@ POST http://localhost:8080/api/quizzes
 
 **Example request:**
 ```
+POST /lohalhost:8080/api/quizzes
+
 {
   "title": "Minecrafts Creator",
   "text": "What is Markus Perssons nickname?",
@@ -84,21 +86,21 @@ POST http://localhost:8080/api/quizzes
 }
 ```
 *Note: The answer is not included. This is also true for all the following GET requests.*
-##### Possible HTTP Status Codes
+#### Possible HTTP Status Codes
 - `HTTP 200` quiz was created successfully.
 - `HTTP 400` any key is invalid.
 - `HTTP 401` you are not sending valid credentials.
 ---
-#### Getting a quiz
+### Getting a quiz
 ```
-GET http://localhost:8080/api/quizzes/{id}
+GET /api/quizzes/{id}
 ```
 **Path variable:**
 - `id` (int) - ID of the quiz you want to get.
 
 **Example request**
 ```
-http://localhost:8080/api/quizzes/5
+GET /localhost:8080/api/quizzes/5
 ```
 
 **Example response:**
@@ -113,22 +115,22 @@ http://localhost:8080/api/quizzes/5
   "options": ["Notch", "Crotch", "Cockroach"]
 }
 ```
-##### Possible HTTP Status Codes
+#### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
 - `HTTP 404` quiz with the specified ID was not found.
 ---
-#### Getting all quizzes (with paging)
+### Getting all quizzes (with paging)
 ```
-GET http://localhost:8080/api/quizzes
+GET /api/quizzes
 ```
 **Query parameter:**
-- `page`(int) - index of the page (default is 0).
+- `page` (int) - index of the page (default is 0).
 - `pagesize` (int) - how many quizzes are on a single page (default is 10).
 
 **Example request:**
 ```
-http://localhost:8080/api/quizzes?page=0&pagesize=3
+GET /localhost:8080/api/quizzes?page=0&pagesize=3
 ```
 **Example response:**
 ```{
@@ -177,13 +179,13 @@ http://localhost:8080/api/quizzes?page=0&pagesize=3
 
 ```
 *Note: Some elements of the response were excluded.*
-##### Possible HTTP Status Codes
+#### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
 ---
-#### Solving a quiz
+### Solving a quiz
 ```
-POST http://localhost:8080/api/quizzes/{id}/solve
+POST /api/quizzes/{id}/solve
 ```
 **Path variable:**
 - `id` (int) - ID of the quiz you want to solve.
@@ -193,9 +195,8 @@ POST http://localhost:8080/api/quizzes/{id}/solve
 
 **Example request:**
 ```
-http://localhost:8080/api/quizzes/5/solve
-```
-```
+POST /localhost:8080/api/quizzes/5/solve
+
 [0, 2]
 ```
 *Note: If all options are wrong, you would pass an empty array `[]`.*
@@ -221,9 +222,9 @@ If the answer was **wrong**...
 - `HTTP 401` you are not sending valid credentials.
 - `HTTP 404` quiz with the specified ID was not found.
 ---
-#### Updating a quiz
+### Updating a quiz
 ```
-PUT http://localhost:8080/api/quizzes/{id}
+PUT /api/quizzes/{id}
 ```
 **Path variable:**
 - `id` (int) - ID of the quiz you want to update.
@@ -238,9 +239,8 @@ PUT http://localhost:8080/api/quizzes/{id}
 
 **Example request:**
 ```
-http://localhost:8080/api/quizzes/5
-```
-```
+PUT /localhost:8080/api/quizzes/5
+
 {
   "title": "Coffee",
   "text": "Select only coffee",
@@ -249,16 +249,16 @@ http://localhost:8080/api/quizzes/5
 }
 ```
 *Note: In the case of all options being wrong, you would pass an empty array `"answer": []`.*
-##### Possible HTTP Status Codes
+#### Possible HTTP Status Codes
 - `HTTP 200` quiz changed successfully.
 - `HTTP 400` any key is invalid.
 - `HTTP 401` you are not sending valid credentials.
 - `HTTP 403` you are not the creator or don't have the admin role.
 - `HTTP 404` quiz with the specified ID was not found.
 ---
-#### Deleting a quiz
+### Deleting a quiz
 ```
-DELETE http://localhost:8080/api/quizzes/{id}
+DELETE /api/quizzes/{id}
 ```
 **Path variable:**
 - `id` (int) - ID of the quiz you want to delete.
@@ -267,17 +267,17 @@ DELETE http://localhost:8080/api/quizzes/{id}
 
 **Example request:**
 ```
-http://localhost:8080/api/quizzes/5
+DELETE /localhost:8080/api/quizzes/5
 ```
-##### Possible HTTP Status Codes
+#### Possible HTTP Status Codes
 - `HTTP 204` quiz deleted successfully.
 - `HTTP 401` you are not sending valid credentials.
 - `HTTP 403` you are not the creator or don't have the admin role.
 - `HTTP 404` quiz with the specified ID was not found.
 ---
-#### Getting all quiz completions (with paging)
+### Getting all quiz completions (with paging)
 ```
-GET http://localhost:8080/api/quizzes/completed
+GET /api/quizzes/completed
 ```
 **Query parameter:**
 - `page`(int) - index of the page (default is 0).
@@ -285,7 +285,7 @@ GET http://localhost:8080/api/quizzes/completed
 
 **Example request:**
 ```
-http://localhost:8080/api/quizzes/completed?page=0&pagesize=5
+GET /localhost:8080/api/quizzes/completed?page=0&pagesize=5
 ```
 *Note: You have to be sending the credentials of the user you completed the quizzes with.*
 
@@ -332,22 +332,22 @@ http://localhost:8080/api/quizzes/completed?page=0&pagesize=5
 }
 ```
 *Note: Its sorted by the time of completion (ascending). Some elements of the response were excluded.*
-##### Possible HTTP Status Codes
+#### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
 ---
 ## Admin
-#### Getting all registered users (with paging)
+### Getting all registered users (with paging)
 ```
-GET http://localhost:8080/api/admin/users
+GET /api/admin/users
 ```
 **Query parameter:**
-- `page`(int) - index of the page (default is 0).
+- `page` (int) - index of the page (default is 0).
 - `pagesize` (int) - how many users are on a single page (default is 10).
 
 **Example request:**
 ```
-http://localhost:8080/api/admin/users?page=0&pagesize=5
+GET /localhost:8080/api/admin/users?page=0&pagesize=5
 ```
 **Example response:**
 ```
@@ -406,39 +406,39 @@ http://localhost:8080/api/admin/users?page=0&pagesize=5
   "empty": false
 }
 ```
-*Note: Some elements of the response were excluded.*
-##### Possible HTTP Status Codes
+*Note: Some elements of the response were excluded. Passwords are encrypted.*
+#### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
 - `HTTP 403` you don't have the admin role.
 ---
-#### Deleting all quizzes
+### Deleting all quizzes
 ```
-DELETE http://localhost:8080/api/admin/quizzes
+DELETE /api/admin/quizzes
 ```
 **Example request:**
 ```
-http://localhost:8080/api/admin/quizzes
+DELETE /localhost:8080/api/admin/quizzes
 ```
-##### Possible HTTP Status Codes
+#### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
 - `HTTP 403` you don't have the admin role.
 ---
-#### Getting all completed quizzes by user (with paging)
+### Getting all completed quizzes by user (with paging)
 ```
-GET http://localhost:/api/admin/{username}/completed
+GET /api/admin/{username}/completed
 ```
 **Path variable:**
-- `username`(string) - username of the user
+- `username` (string) - username of the user
 
 **Query parameter:**
-- `page`(int) - index of the page (default is 0).
+- `page` (int) - index of the page (default is 0).
 - `pagesize` (int) - how many completions are on a single page (default is 10).
 
 **Example request:**
 ```
-http://localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
+GET /localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
 ```
 **Example response:**
 ```
@@ -483,7 +483,7 @@ http://localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
 }
 ```
 *Note: Its sorted by the time of completion (ascending). Some elements of the response were excluded.*
-##### Possible HTTP Status Codes
+#### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
 - `HTTP 403` you don't have the admin role.
