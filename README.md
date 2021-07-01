@@ -280,7 +280,7 @@ DELETE /localhost:8080/api/quizzes/5
 GET /api/quizzes/completed
 ```
 **Query parameter:**
-- `page`(int) - index of the page (default is 0).
+- `page` (int) - index of the page (default is 0).
 - `pagesize` (int) - how many completions are on a single page (default is 10).
 
 **Example request:**
