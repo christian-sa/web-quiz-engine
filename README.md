@@ -251,6 +251,7 @@ http://localhost:8080/api/quizzes/5
 *Note: In the case of all options being wrong, you would pass an empty array `"answer": []`.*
 ##### Possible HTTP Status Codes
 - `HTTP 200` quiz changed successfully.
+- `HTTP 400` any key is invalid.
 - `HTTP 401` you are not sending valid credentials.
 - `HTTP 403` you are not the creator or don't have the admin role.
 - `HTTP 404` quiz with the specified ID was not found.
