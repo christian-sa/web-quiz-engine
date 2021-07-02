@@ -89,8 +89,8 @@ POST /lohalhost:8080/api/quizzes
   "options": ["Notch", "Crotch", "Cockroach"]
 }
 ```
-*Note: The answer is not included. This is also true for all the following GET requests.* 
 ![Posting Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/posting-quiz.gif) 
+*Note: The answer is not included. This is also true for all the following GET requests.* 
 #### Possible HTTP Status Codes
 - `HTTP 200` quiz was created successfully.
 - `HTTP 400` any key is invalid.
@@ -184,7 +184,6 @@ GET /localhost:8080/api/quizzes?page=0&pagesize=3
    }
 
 ```
-*Note: Some elements of the response were excluded.*
 ![Get all quizzes](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-quizzes.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
@@ -256,8 +255,8 @@ PUT /localhost:8080/api/quizzes/2
   "answer": [0, 1]
 }
 ```
-*Note: In the case of all options being wrong, you would pass an empty array `"answer": []`.*
 ![Updating Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/update-quiz.gif) 
+*Note: In the case of all options being wrong, you would pass an empty array `"answer": []`.*
 #### Possible HTTP Status Codes
 - `HTTP 200` quiz changed successfully.
 - `HTTP 400` any key is invalid.
@@ -269,10 +268,10 @@ PUT /localhost:8080/api/quizzes/2
 ```
 DELETE /api/quizzes/{id}
 ```
+*Note: You have to be the original creator of the quiz with the specified ID or have the admin role.*
+
 **Path variable:**
 - `id` (int) - ID of the quiz you want to delete.
-
-*Note: You have to be the original creator of the quiz with the specified ID or have the admin role.*
 
 **Example request:**
 ```
@@ -341,8 +340,8 @@ GET /localhost:8080/api/quizzes/completed?page=0&pagesize=5
   "empty": false
 }
 ```
-*Note: Its sorted by the time of completion (ascending). Some elements of the response were excluded.*
 ![Get completions](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-quizcompletions.gif) 
+*Note: Its sorted by the time of completion (ascending).
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
@@ -417,7 +416,6 @@ GET /localhost:8080/api/admin/users?page=0&pagesize=5
   "empty": false
 }
 ```
-*Note: Some elements of the response were excluded. Passwords are encrypted.*
 ![Get Users](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-users.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
@@ -495,8 +493,8 @@ GET /localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
   "empty": false
 }
 ```
-*Note: Its sorted by the time of completion (ascending). Some elements of the response were excluded.*
 ![Get completions by User](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-completed-by-user.gif) 
+*Note: Its sorted by the time of completion (ascending).
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
