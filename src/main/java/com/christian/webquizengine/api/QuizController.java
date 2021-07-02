@@ -47,6 +47,7 @@ public class QuizController {
     @PostMapping(value = "/api/quizzes/{id}/solve")
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     public QuizResult solveQuiz(@PathVariable long id, @RequestBody List<Integer> answer, @AuthenticationPrincipal UserDetails userDetails) {
+        myQuizService.findById(id).orElseThrow(() -> new QuizNotFoundException(id));
         // Set a baseline for the correct answer, since it can be null. In that case, string remains empty.
         String correctAnswer = "";
         // Catch NPE and ignore it, since we already established a baseline for the correct answer.

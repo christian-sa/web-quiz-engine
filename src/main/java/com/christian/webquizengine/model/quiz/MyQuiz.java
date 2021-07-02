@@ -68,7 +68,6 @@ public class MyQuiz extends AbstractQuizEntity {
             }
         }
         this.options = buildOption.toString();
-        System.out.println(buildOption);
     }
 
     public void setAnswer(List<Integer> answer) {
@@ -82,7 +81,6 @@ public class MyQuiz extends AbstractQuizEntity {
             }
         }
         System.out.println(buildAnswer);
-        this.answer = buildAnswer.toString();
     }
 
     @JsonIgnore
