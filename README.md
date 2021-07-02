@@ -494,6 +494,7 @@ GET /localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
 }
 ```
 ![Get completions by User](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-completed-by-user.gif) 
+
 *Note: Its sorted by the time of completion (ascending).*
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
