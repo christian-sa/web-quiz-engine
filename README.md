@@ -202,7 +202,7 @@ POST /api/quizzes/{id}/solve
 
 **Example request:**
 ```
-POST /localhost:8080/api/quizzes/5/solve
+POST /localhost:8080/api/quizzes/2/solve
 
 [0, 2]
 ```
@@ -246,7 +246,7 @@ PUT /api/quizzes/{id}
 
 **Example request:**
 ```
-PUT /localhost:8080/api/quizzes/5
+PUT /localhost:8080/api/quizzes/2
 
 {
   "title": "Coffee",
@@ -274,7 +274,7 @@ DELETE /api/quizzes/{id}
 
 **Example request:**
 ```
-DELETE /localhost:8080/api/quizzes/5
+DELETE /localhost:8080/api/quizzes/2
 ```
 #### Possible HTTP Status Codes
 - `HTTP 204` quiz deleted successfully.
@@ -301,24 +301,24 @@ GET /localhost:8080/api/quizzes/completed?page=0&pagesize=5
 {
   "content": [
     {
-      "createdAt": "2021-07-01T17:13:28.160674",
+      "createdAt": "2021-07-02T17:37:52.271991",
+      "quiz_id": 3
+    },
+    {
+      "createdAt": "2021-07-02T17:37:55.227274",
+      "quiz_id": 8
+    },
+    {
+      "createdAt": "2021-07-02T17:37:58.670042",
       "quiz_id": 5
     },
     {
-      "createdAt": "2021-07-01T17:13:30.923315",
-      "quiz_id": 9
+      "createdAt": "2021-07-02T17:38:01.043768",
+      "quiz_id": 10
     },
     {
-      "createdAt": "2021-07-01T17:13:33.228391",
-      "quiz_id": 4
-    },
-    {
-      "createdAt": "2021-07-01T17:13:35.902169",
-      "quiz_id": 7
-    },
-    {
-      "createdAt": "2021-07-01T17:13:44.637853",
-      "quiz_id": 3
+      "createdAt": "2021-07-02T17:38:03.752342",
+      "quiz_id": 12
     }
   ],
   ...
@@ -383,7 +383,7 @@ GET /localhost:8080/api/admin/users?page=0&pagesize=5
     },
     {
       "id": 4,
-      "email": "googlert@mail.com",
+      "email": "googler@mail.com",
       "password": "$2a$10$X1Hf/PSUq1wSW85r47sUdO37krh8FM88KiffwwPhtQdjn890EmLx.",
       "roles": "ROLE_USER",
       "enabled": true
@@ -452,24 +452,24 @@ GET /localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
 {
   "content": [
     {
-      "createdAt": "2021-07-01T17:13:28.160674",
-      "quiz_id": 5
+      "createdAt": "2021-07-02T17:56:11.134224",
+      "quiz_id": 8
     },
     {
-      "createdAt": "2021-07-01T17:13:30.923315",
-      "quiz_id": 9
+      "createdAt": "2021-07-02T17:56:14.922174",
+      "quiz_id": 12
     },
     {
-      "createdAt": "2021-07-01T17:13:33.228391",
-      "quiz_id": 4
+      "createdAt": "2021-07-02T17:56:16.883889",
+      "quiz_id": 10
     },
     {
-      "createdAt": "2021-07-01T17:13:35.902169",
-      "quiz_id": 7
+      "createdAt": "2021-07-02T17:56:19.545087",
+      "quiz_id": 16
     },
     {
-      "createdAt": "2021-07-01T17:13:44.637853",
-      "quiz_id": 3
+      "createdAt": "2021-07-02T17:56:22.072447",
+      "quiz_id": 18
     }
   ],
   ...
@@ -477,7 +477,7 @@ GET /localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
   "last": true,
   "totalPages": 1,
   "totalElements": 5,
-  "size": 10,
+  "size": 5,
   "number": 0,
   "sort": {
     "sorted": true,
