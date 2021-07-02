@@ -13,6 +13,7 @@ also use a Unix Shell (i.e., Bash) on your computer and utilize `curl`. However,
 ```
 gradlew bootRun
 ```
+![Running the application](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/run-application.gif) \
 *Note: You have to navigate the shell to the projects directory.* 
 
 It will run on port `8080` by default. Currently, the application will create a fresh database
@@ -45,6 +46,7 @@ POST /lohalhost:8080/api/register
   "password": "secret"
 }
 ```
+![Registering](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/registering-user.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` user was registered successfully.
 - `HTTP 400` email is already taken by another user.
@@ -87,7 +89,8 @@ POST /lohalhost:8080/api/quizzes
   "options": ["Notch", "Crotch", "Cockroach"]
 }
 ```
-*Note: The answer is not included. This is also true for all the following GET requests.*
+*Note: The answer is not included. This is also true for all the following GET requests.* 
+![Posting Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/posting-quiz.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` quiz was created successfully.
 - `HTTP 400` any key is invalid.
@@ -117,6 +120,7 @@ GET /localhost:8080/api/quizzes/5
   "options": ["Notch", "Crotch", "Cockroach"]
 }
 ```
+![Get by ID](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-quiz-by-id.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
@@ -181,6 +185,7 @@ GET /localhost:8080/api/quizzes?page=0&pagesize=3
 
 ```
 *Note: Some elements of the response were excluded.*
+![Get all quizzes](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-quizzes.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
