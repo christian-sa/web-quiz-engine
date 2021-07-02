@@ -89,8 +89,7 @@ POST /lohalhost:8080/api/quizzes
   "options": ["Notch", "Crotch", "Cockroach"]
 }
 ```
-![Posting Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/posting-quiz.gif) 
-
+![Posting Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/posting-quiz.gif) \
 *Note: The answer is not included. This is also true for all the following GET requests.* 
 #### Possible HTTP Status Codes
 - `HTTP 200` quiz was created successfully.
@@ -256,7 +255,7 @@ PUT /localhost:8080/api/quizzes/2
   "answer": [0, 1]
 }
 ```
-![Updating Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/update-quiz.gif) 
+![Updating Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/update-quiz.gif) \
 *Note: In the case of all options being wrong, you would pass an empty array `"answer": []`.*
 #### Possible HTTP Status Codes
 - `HTTP 200` quiz changed successfully.
@@ -341,8 +340,7 @@ GET /localhost:8080/api/quizzes/completed?page=0&pagesize=5
   "empty": false
 }
 ```
-![Get completions](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-quizcompletions.gif) 
-
+![Get completions](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-quizcompletions.gif) \
 *Note: Its sorted by the time of completion (ascending).*
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
@@ -495,8 +493,7 @@ GET /localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
   "empty": false
 }
 ```
-![Get completions by User](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-completed-by-user.gif) 
-
+![Get completions by User](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-completed-by-user.gif) \
 *Note: Its sorted by the time of completion (ascending).*
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
