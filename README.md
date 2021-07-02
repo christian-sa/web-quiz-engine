@@ -90,6 +90,7 @@ POST /lohalhost:8080/api/quizzes
 }
 ```
 ![Posting Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/posting-quiz.gif) 
+
 *Note: The answer is not included. This is also true for all the following GET requests.* 
 #### Possible HTTP Status Codes
 - `HTTP 200` quiz was created successfully.
@@ -341,6 +342,7 @@ GET /localhost:8080/api/quizzes/completed?page=0&pagesize=5
 }
 ```
 ![Get completions](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-quizcompletions.gif) 
+
 *Note: Its sorted by the time of completion (ascending).*
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
