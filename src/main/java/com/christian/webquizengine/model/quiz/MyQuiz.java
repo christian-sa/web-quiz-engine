@@ -80,7 +80,7 @@ public class MyQuiz extends AbstractQuizEntity {
                 buildAnswer.append(answerStrings.get(i));
             }
         }
-        System.out.println(buildAnswer);
+        this.answer = buildAnswer.toString();
     }
 
     @JsonIgnore

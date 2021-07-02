@@ -52,7 +52,7 @@ public class QuizController {
         String correctAnswer = "";
         // Catch NPE and ignore it, since we already established a baseline for the correct answer.
         try {
-            correctAnswer = myQuizService.findById(id).orElseThrow(() -> new QuizNotFoundException(id)).getAnswer().toString();
+            correctAnswer = myQuizService.findById(id).get().getAnswer().toString();
         } catch (Exception ignore) { }
         // If submitted List in RequestBody is empty, treat it as empty string.
         String submittedAnswer = answer.isEmpty() ? "" : answer.toString();
