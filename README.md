@@ -224,6 +224,7 @@ If the answer was **wrong**...
   "feedback": "Wrong answer! Please, try again."
 }
 ```
+![Solving Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/solving-quiz.gif) 
 ##### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
@@ -256,6 +257,7 @@ PUT /localhost:8080/api/quizzes/2
 }
 ```
 *Note: In the case of all options being wrong, you would pass an empty array `"answer": []`.*
+![Updating Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/update-quiz.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` quiz changed successfully.
 - `HTTP 400` any key is invalid.
@@ -276,6 +278,7 @@ DELETE /api/quizzes/{id}
 ```
 DELETE /localhost:8080/api/quizzes/2
 ```
+![Delete Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/delete-quiz.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 204` quiz deleted successfully.
 - `HTTP 401` you are not sending valid credentials.
@@ -339,6 +342,7 @@ GET /localhost:8080/api/quizzes/completed?page=0&pagesize=5
 }
 ```
 *Note: Its sorted by the time of completion (ascending). Some elements of the response were excluded.*
+![Get completions](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-quizcompletions.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
@@ -414,6 +418,7 @@ GET /localhost:8080/api/admin/users?page=0&pagesize=5
 }
 ```
 *Note: Some elements of the response were excluded. Passwords are encrypted.*
+![Get Users](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-users.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
@@ -427,6 +432,7 @@ DELETE /api/admin/quizzes
 ```
 DELETE /localhost:8080/api/admin/quizzes
 ```
+![Delete all quizzes](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/delete-all-quizzes.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
@@ -490,6 +496,7 @@ GET /localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
 }
 ```
 *Note: Its sorted by the time of completion (ascending). Some elements of the response were excluded.*
+![Get completions by User](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-completed-by-user.gif) 
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
