@@ -341,7 +341,7 @@ GET /localhost:8080/api/quizzes/completed?page=0&pagesize=5
 }
 ```
 ![Get completions](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-quizcompletions.gif) 
-*Note: Its sorted by the time of completion (ascending).
+*Note: Its sorted by the time of completion (ascending).*
 #### Possible HTTP Status Codes
 - `HTTP 200` OK.
 - `HTTP 401` you are not sending valid credentials.
