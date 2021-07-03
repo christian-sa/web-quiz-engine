@@ -72,7 +72,7 @@ POST /api/quizzes
 | `title`   | `string` | **Required.**                          |
 | `text`    | `string` | **Required.**                          |
 | `options` | `array`  | **Required**, at least 2 options.      |
-| `answer`  | `array`  | **Optional**, all answers can be wrong |
+| `answer`  | `array`  | **Optional**, all answers can be wrong.|
 
 **Example request:**
 ```json
@@ -278,7 +278,7 @@ PUT /api/quizzes/{id}
 | `title`   | `string` | **Required.**                          |
 | `text`    | `string` | **Required.**                          |
 | `options` | `array`  | **Required**, at least 2 options.      |
-| `answer`  | `array`  | **Optional**, all answers can be wrong |
+| `answer`  | `array`  | **Optional**, all answers can be wrong.|
 
 *Note: You have to be the original creator of the quiz with the specified ID or have the admin role.*
 
