@@ -14,7 +14,7 @@ also use a Unix Shell (i.e., Bash) on your computer and utilize `curl`. However,
 gradlew bootRun
 ```
 ![Running the application](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/run-application.gif) \
-*Note: You have to navigate the shell to the projects directory.* 
+*Note: You have to navigate the shell to the project directory.* 
 
 It will run on port `8080` by default. Currently, the application will create a fresh database
 on every startup and wipe the existing one if necessary. If you would like to change these behaviours, you have to configure
@@ -34,40 +34,51 @@ POST /api/register
 ```
 
 **Request JSON:**
-- `email` (string) - gets checked for validity.
-- `password` (string) - must be at least five characters long.
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `email`   | `string` | Has to be a valid email address.       |
+| `password`| `string` | Must be at least five characters long. |
 
 **Example request:**
-```
+```json
 POST /lohalhost:8080/api/register
-
+```
+```json
 {
   "email": "testing@mail.com",
   "password": "secret"
 }
 ```
 ![Registering](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/registering-user.gif) 
+
 #### Possible HTTP Status Codes
-- `HTTP 200` user was registered successfully.
-- `HTTP 400` email is already taken by another user.
-- `HTTP 400` either email or password are invalid.
----
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 200` | `OK.`                          | 
+| `HTPP 400` | `Email is already taken.`      | 
+| `HTTP 400` | `Email or password is invalid.`| 
+
+
 ## User
 ### Creating a new quiz
+
 ```
 POST /api/quizzes
 ```
 
 **Request JSON:**
-- `title` (string) - required
-- `text` (string) - required
-- `options` (array) - required, must contain at least two options.
-- `answer` (array) - optional, since all options can be wrong. Contains indices of correct options.
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `title`   | `string` | **Required.**                          |
+| `text`    | `string` | **Required.**                          |
+| `options` | `array`  | **Required**, at least 2 options.      |
+| `answer`  | `array`  | **Optional**, all answers can be wrong |
 
 **Example request:**
-```
+```json
 POST /lohalhost:8080/api/quizzes
-
+```
+```json
 {
   "title": "Minecrafts Creator",
   "text": "What is Markus Perssons nickname?",
@@ -78,7 +89,7 @@ POST /lohalhost:8080/api/quizzes
 *Note: In the case of all options being wrong, you would pass an empty array `"answer": []`.*
 
 **Example response:**
-```
+```json
 {
   "id": 2,
   "version": 1,
@@ -89,27 +100,33 @@ POST /lohalhost:8080/api/quizzes
   "options": ["Notch", "Crotch", "Cockroach"]
 }
 ```
+
 ![Posting Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/posting-quiz.gif) \
 *Note: The answer is not included. This is also true for all the following GET requests.* 
+
 #### Possible HTTP Status Codes
-- `HTTP 200` quiz was created successfully.
-- `HTTP 400` any key is invalid.
-- `HTTP 401` you are not sending valid credentials.
----
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 200` | `OK.`                          | 
+| `HTPP 400` | `Any key is invalid.`          | 
+| `HTTP 401` | `Credentials are not valid.`   | 
+
 ### Getting a quiz
 ```
 GET /api/quizzes/{id}
 ```
 **Path variable:**
-- `id` (int) - ID of the quiz you want to get.
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `id`      | `int`    | ID of the quiz.                        |
 
 **Example request**
-```
+```json
 GET /localhost:8080/api/quizzes/5
 ```
 
 **Example response:**
-```
+```json
 {
   "quiz_id": 5,
   "version": 1,
@@ -121,25 +138,31 @@ GET /localhost:8080/api/quizzes/5
 }
 ```
 ![Get by ID](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-quiz-by-id.gif) 
+
 #### Possible HTTP Status Codes
-- `HTTP 200` OK.
-- `HTTP 401` you are not sending valid credentials.
-- `HTTP 404` quiz with the specified ID was not found.
----
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 200` | `OK.`                          | 
+| `HTPP 401` | `Credentials are not valid.`   | 
+| `HTTP 404` | `Quiz was not found.`          | 
+
 ### Getting all quizzes (with paging)
 ```
 GET /api/quizzes
 ```
 **Query parameter:**
-- `page` (int) - index of the page (default is 0).
-- `pagesize` (int) - how many quizzes are on a single page (default is 10).
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `page`    | `int`    | **Default: 0**, index of the page.     |
+| `pagesize`| `int`    | **Default: 10**, number of quizzes on a page.|
 
 **Example request:**
-```
+```json
 GET /localhost:8080/api/quizzes?page=0&pagesize=3
 ```
 **Example response:**
-```{
+```json
+{
      "content": [
        {
          "quiz_id": 1,
@@ -185,24 +208,32 @@ GET /localhost:8080/api/quizzes?page=0&pagesize=3
 
 ```
 ![Get all quizzes](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-quizzes.gif) 
+
 #### Possible HTTP Status Codes
-- `HTTP 200` OK.
-- `HTTP 401` you are not sending valid credentials.
----
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 200` | `OK.`                          | 
+| `HTPP 401` | `Credentials are not valid.`   | 
+
 ### Solving a quiz
 ```
 POST /api/quizzes/{id}/solve
 ```
 **Path variable:**
-- `id` (int) - ID of the quiz you want to solve.
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `id`      | `int`    | ID of the quiz.                        |
 
 **Request JSON:**
-- `answer` (array) - array of integers containing the correct answers.
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `answer`  | `array`  | Array containing indices of correct answers.|
 
 **Example request:**
-```
+```json
 POST /localhost:8080/api/quizzes/2/solve
-
+```
+```json
 [0, 2]
 ```
 *Note: If all options are wrong, you would pass an empty array `[]`.*
@@ -210,44 +241,52 @@ POST /localhost:8080/api/quizzes/2/solve
 **Example response:**
 
 If the answer was **correct**...
-```
+```json
 {
   "success": true,
   "feedback": "Congratulations, you're right!"
 }
 ```
 If the answer was **wrong**...
-```
+```json
 {
   "success": false,
   "feedback": "Wrong answer! Please, try again."
 }
 ```
 ![Solving Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/solving-quiz.gif) 
+
 ##### Possible HTTP Status Codes
-- `HTTP 200` OK.
-- `HTTP 401` you are not sending valid credentials.
-- `HTTP 404` quiz with the specified ID was not found.
----
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 200` | `OK.`                          | 
+| `HTPP 401` | `Credentials are not valid.`   | 
+| `HTPP 404` | `Quiz was not found.`          | 
+
 ### Updating a quiz
 ```
 PUT /api/quizzes/{id}
 ```
 **Path variable:**
-- `id` (int) - ID of the quiz you want to update.
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `id`      | `int`    | ID of the quiz.                        |
 
 **Request JSON:**
-- `title` (string) - required
-- `text` (string) - required
-- `options` (array) - required, must contain at least two options.
-- `answer` (array) - optional, since all options can be wrong. Contains indices of correct options.
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `title`   | `string` | **Required.**                          |
+| `text`    | `string` | **Required.**                          |
+| `options` | `array`  | **Required**, at least 2 options.      |
+| `answer`  | `array`  | **Optional**, all answers can be wrong |
 
 *Note: You have to be the original creator of the quiz with the specified ID or have the admin role.*
 
 **Example request:**
-```
+```json
 PUT /localhost:8080/api/quizzes/2
-
+```
+```
 {
   "title": "Coffee",
   "text": "Select only coffee",
@@ -257,6 +296,7 @@ PUT /localhost:8080/api/quizzes/2
 ```
 ![Updating Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/update-quiz.gif) \
 *Note: In the case of all options being wrong, you would pass an empty array `"answer": []`.*
+
 #### Possible HTTP Status Codes
 - `HTTP 200` quiz changed successfully.
 - `HTTP 400` any key is invalid.
@@ -278,28 +318,33 @@ DELETE /api/quizzes/{id}
 DELETE /localhost:8080/api/quizzes/2
 ```
 ![Delete Quiz](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/delete-quiz.gif) 
+
 #### Possible HTTP Status Codes
-- `HTTP 204` quiz deleted successfully.
-- `HTTP 401` you are not sending valid credentials.
-- `HTTP 403` you are not the creator or don't have the admin role.
-- `HTTP 404` quiz with the specified ID was not found.
----
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 204` | `Quiz deleted.`                | 
+| `HTPP 401` | `Credentials are not valid.`   |
+| `HTPP 403` | `Not the creator or no admin role.`|
+| `HTPP 404` | `Quiz was not found.`          | 
+
 ### Getting all quiz completions (with paging)
 ```
 GET /api/quizzes/completed
 ```
 **Query parameter:**
-- `page` (int) - index of the page (default is 0).
-- `pagesize` (int) - how many completions are on a single page (default is 10).
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `page`    | `int`    | **Default: 0**, index of the page.     |
+| `pagesize`| `int`    | **Default: 10**, number of quizzes on a page.|
 
 **Example request:**
-```
+```json
 GET /localhost:8080/api/quizzes/completed?page=0&pagesize=5
 ```
 *Note: You have to be sending the credentials of the user you completed the quizzes with.*
 
 **Example response:**
-```
+```json
 {
   "content": [
     {
@@ -342,25 +387,30 @@ GET /localhost:8080/api/quizzes/completed?page=0&pagesize=5
 ```
 ![Get completions](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-quizcompletions.gif) \
 *Note: Its sorted by the time of completion (ascending).*
+
 #### Possible HTTP Status Codes
-- `HTTP 200` OK.
-- `HTTP 401` you are not sending valid credentials.
----
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 204` | `Quiz deleted.`                | 
+| `HTPP 401` | `Credentials are not valid.`   |
+
 ## Admin
 ### Getting all registered users (with paging)
 ```
 GET /api/admin/users
 ```
 **Query parameter:**
-- `page` (int) - index of the page (default is 0).
-- `pagesize` (int) - how many users are on a single page (default is 10).
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `page`    | `int`    | **Default: 0**, index of the page.     |
+| `pagesize`| `int`    | **Default: 10**, number of quizzes on a page.|
 
 **Example request:**
-```
+```json
 GET /localhost:8080/api/admin/users?page=0&pagesize=5
 ```
 **Example response:**
-```
+```json
 {
   "content": [
     {
@@ -417,42 +467,52 @@ GET /localhost:8080/api/admin/users?page=0&pagesize=5
 }
 ```
 ![Get Users](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-users.gif) 
+
 #### Possible HTTP Status Codes
-- `HTTP 200` OK.
-- `HTTP 401` you are not sending valid credentials.
-- `HTTP 403` you don't have the admin role.
----
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 200` | `Quiz deleted.`                | 
+| `HTPP 401` | `Credentials are not valid.`   |
+| `HTPP 403` | `No admin role.`               |
+
 ### Deleting all quizzes
 ```
 DELETE /api/admin/quizzes
 ```
 **Example request:**
-```
+```json
 DELETE /localhost:8080/api/admin/quizzes
 ```
 ![Delete all quizzes](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/delete-all-quizzes.gif) 
+
 #### Possible HTTP Status Codes
-- `HTTP 200` OK.
-- `HTTP 401` you are not sending valid credentials.
-- `HTTP 403` you don't have the admin role.
----
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 200` | `Quiz deleted.`                | 
+| `HTPP 401` | `Credentials are not valid.`   |
+| `HTPP 403` | `No admin role.`               |
+
 ### Getting all completed quizzes by user (with paging)
-```
+```json
 GET /api/admin/{username}/completed
 ```
 **Path variable:**
-- `username` (string) - username of the user
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `username`| `string` | Username of the user.                  |
 
 **Query parameter:**
-- `page` (int) - index of the page (default is 0).
-- `pagesize` (int) - how many completions are on a single page (default is 10).
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `page`    | `int`    | **Default: 0**, index of the page.     |
+| `pagesize`| `int`    | **Default: 10**, number of quizzes on a page.|
 
 **Example request:**
-```
+```json
 GET /localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
 ```
 **Example response:**
-```
+```json
 {
   "content": [
     {
@@ -496,6 +556,9 @@ GET /localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
 ![Get completions by User](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-completed-by-user.gif) \
 *Note: Its sorted by the time of completion (ascending).*
 #### Possible HTTP Status Codes
-- `HTTP 200` OK.
-- `HTTP 401` you are not sending valid credentials.
-- `HTTP 403` you don't have the admin role.
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 200` | `Quiz deleted.`                | 
+| `HTPP 401` | `Credentials are not valid.`   |
+| `HTPP 403` | `No admin role.`               |
+ 

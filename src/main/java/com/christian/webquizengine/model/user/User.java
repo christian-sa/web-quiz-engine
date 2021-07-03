@@ -20,7 +20,7 @@ public class User {
     @NotNull
     @Column(unique = true)
     private String email;
-    @Size(min = 5, message = "Your Password should be at least four characters long.")
+    @Size(min = 5, message = "Your Password should be at least five characters long.")
     private String password;
     private String roles;
     private boolean enabled = true;
