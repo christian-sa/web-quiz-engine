@@ -54,9 +54,9 @@ POST /lohalhost:8080/api/register
 #### Possible HTTP Status Codes
 | Code       | Description                    | 
 | :----------| :----------------------------- | 
-| `HTTP 200` | `OK.`                          | 
-| `HTPP 400` | `Email is already taken.`      | 
-| `HTTP 400` | `Email or password is invalid.`| 
+| `HTTP 200` | OK.                            | 
+| `HTPP 400` | Email is already taken.        | 
+| `HTTP 400` | Email or password is invalid.  | 
 
 
 ## User
@@ -107,16 +107,16 @@ POST /lohalhost:8080/api/quizzes
 #### Possible HTTP Status Codes
 | Code       | Description                    | 
 | :----------| :----------------------------- | 
-| `HTTP 200` | `OK.`                          | 
-| `HTPP 400` | `Any key is invalid.`          | 
-| `HTTP 401` | `Credentials are not valid.`   | 
+| `HTTP 200` | OK.                            | 
+| `HTPP 400` | Any key is invalid.            | 
+| `HTTP 401` | Credentials are not valid.     | 
 
 ### Getting a quiz
 ```
 GET /api/quizzes/{id}
 ```
 **Path variable:**
-| Parameter | Type     | Description                            |
+| Variable  | Type     | Description                            |
 | :-------- | :------- | :------------------------------------- |
 | `id`      | `int`    | ID of the quiz.                        |
 
@@ -142,9 +142,9 @@ GET /localhost:8080/api/quizzes/5
 #### Possible HTTP Status Codes
 | Code       | Description                    | 
 | :----------| :----------------------------- | 
-| `HTTP 200` | `OK.`                          | 
-| `HTPP 401` | `Credentials are not valid.`   | 
-| `HTTP 404` | `Quiz was not found.`          | 
+| `HTTP 200` | OK.                            | 
+| `HTPP 401` | Credentials are not valid.     | 
+| `HTTP 404` | Quiz was not found.            | 
 
 ### Getting all quizzes (with paging)
 ```
@@ -212,15 +212,15 @@ GET /localhost:8080/api/quizzes?page=0&pagesize=3
 #### Possible HTTP Status Codes
 | Code       | Description                    | 
 | :----------| :----------------------------- | 
-| `HTTP 200` | `OK.`                          | 
-| `HTPP 401` | `Credentials are not valid.`   | 
+| `HTTP 200` | OK.                            | 
+| `HTPP 401` | Credentials are not valid.     | 
 
 ### Solving a quiz
 ```
 POST /api/quizzes/{id}/solve
 ```
 **Path variable:**
-| Parameter | Type     | Description                            |
+| Variable  | Type     | Description                            |
 | :-------- | :------- | :------------------------------------- |
 | `id`      | `int`    | ID of the quiz.                        |
 
@@ -259,16 +259,16 @@ If the answer was **wrong**...
 ##### Possible HTTP Status Codes
 | Code       | Description                    | 
 | :----------| :----------------------------- | 
-| `HTTP 200` | `OK.`                          | 
-| `HTPP 401` | `Credentials are not valid.`   | 
-| `HTPP 404` | `Quiz was not found.`          | 
+| `HTTP 200` | OK.                            | 
+| `HTPP 401` | Credentials are not valid.     | 
+| `HTPP 404` | Quiz was not found.            | 
 
 ### Updating a quiz
 ```
 PUT /api/quizzes/{id}
 ```
 **Path variable:**
-| Parameter | Type     | Description                            |
+| Variable  | Type     | Description                            |
 | :-------- | :------- | :------------------------------------- |
 | `id`      | `int`    | ID of the quiz.                        |
 
@@ -298,12 +298,14 @@ PUT /localhost:8080/api/quizzes/2
 *Note: In the case of all options being wrong, you would pass an empty array `"answer": []`.*
 
 #### Possible HTTP Status Codes
-- `HTTP 200` quiz changed successfully.
-- `HTTP 400` any key is invalid.
-- `HTTP 401` you are not sending valid credentials.
-- `HTTP 403` you are not the creator or don't have the admin role.
-- `HTTP 404` quiz with the specified ID was not found.
----
+| Code       | Description                    | 
+| :----------| :----------------------------- | 
+| `HTTP 200` | OK.                            | 
+| `HTTP 400` | Any key is invalid.            | 
+| `HTPP 401` | Credentials are not valid.     |
+| `HTPP 403` | Not the creator or no admin role.|
+| `HTPP 404` | Quiz was not found.            | 
+
 ### Deleting a quiz
 ```
 DELETE /api/quizzes/{id}
@@ -311,7 +313,9 @@ DELETE /api/quizzes/{id}
 *Note: You have to be the original creator of the quiz with the specified ID or have the admin role.*
 
 **Path variable:**
-- `id` (int) - ID of the quiz you want to delete.
+| Variable  | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `id`      | `int`    | ID of the quiz.                        |
 
 **Example request:**
 ```
@@ -322,10 +326,10 @@ DELETE /localhost:8080/api/quizzes/2
 #### Possible HTTP Status Codes
 | Code       | Description                    | 
 | :----------| :----------------------------- | 
-| `HTTP 204` | `Quiz deleted.`                | 
-| `HTPP 401` | `Credentials are not valid.`   |
-| `HTPP 403` | `Not the creator or no admin role.`|
-| `HTPP 404` | `Quiz was not found.`          | 
+| `HTTP 204` | Quiz deleted.                  | 
+| `HTPP 401` | Credentials are not valid.     |
+| `HTPP 403` | Not the creator or no admin role.|
+| `HTPP 404` | Quiz was not found.            | 
 
 ### Getting all quiz completions (with paging)
 ```
@@ -391,8 +395,8 @@ GET /localhost:8080/api/quizzes/completed?page=0&pagesize=5
 #### Possible HTTP Status Codes
 | Code       | Description                    | 
 | :----------| :----------------------------- | 
-| `HTTP 204` | `Quiz deleted.`                | 
-| `HTPP 401` | `Credentials are not valid.`   |
+| `HTTP 204` | Quiz deleted.                  | 
+| `HTPP 401` | Credentials are not valid.     |
 
 ## Admin
 ### Getting all registered users (with paging)
@@ -471,9 +475,9 @@ GET /localhost:8080/api/admin/users?page=0&pagesize=5
 #### Possible HTTP Status Codes
 | Code       | Description                    | 
 | :----------| :----------------------------- | 
-| `HTTP 200` | `Quiz deleted.`                | 
-| `HTPP 401` | `Credentials are not valid.`   |
-| `HTPP 403` | `No admin role.`               |
+| `HTTP 200` | Quiz deleted.                  | 
+| `HTPP 401` | Credentials are not valid.     |
+| `HTPP 403` | No admin role.                 |
 
 ### Deleting all quizzes
 ```
@@ -488,16 +492,16 @@ DELETE /localhost:8080/api/admin/quizzes
 #### Possible HTTP Status Codes
 | Code       | Description                    | 
 | :----------| :----------------------------- | 
-| `HTTP 200` | `Quiz deleted.`                | 
-| `HTPP 401` | `Credentials are not valid.`   |
-| `HTPP 403` | `No admin role.`               |
+| `HTTP 200` | Quiz deleted.                  | 
+| `HTPP 401` | Credentials are not valid.     |
+| `HTPP 403` | No admin role.                 |
 
 ### Getting all completed quizzes by user (with paging)
-```json
+```
 GET /api/admin/{username}/completed
 ```
 **Path variable:**
-| Parameter | Type     | Description                            |
+| Variable  | Type     | Description                            |
 | :-------- | :------- | :------------------------------------- |
 | `username`| `string` | Username of the user.                  |
 
@@ -555,10 +559,11 @@ GET /localhost:/api/admin/superuser@mail.com/completed?page=0&pagesize=5
 ```
 ![Get completions by User](https://github.com/christian-sa/web-quiz-engine/blob/main/src/main/resources/gifs/get-all-completed-by-user.gif) \
 *Note: Its sorted by the time of completion (ascending).*
+
 #### Possible HTTP Status Codes
 | Code       | Description                    | 
 | :----------| :----------------------------- | 
-| `HTTP 200` | `Quiz deleted.`                | 
-| `HTPP 401` | `Credentials are not valid.`   |
-| `HTPP 403` | `No admin role.`               |
+| `HTTP 200` | Quiz deleted.                  | 
+| `HTPP 401` | Credentials are not valid.     |
+| `HTPP 403` | No admin role.                 |
  
